@@ -5,6 +5,8 @@ package fri.tik.seznam;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
+import java.util.ArrayList;
+
 /**
  *
  *
@@ -144,5 +146,14 @@ public class PrioritetnaVrsta<Tip extends Comparable> implements Seznam<Tip> {
             if (e.equals(tip)) return true;
         }
         return false;
+    }
+
+    @Override
+    public ArrayList<Tip> asList() {
+        ArrayList<Tip> list = new ArrayList<>();
+        for (int i = 0; i < end; i++) {
+            list.add((Tip) heap[i]);
+        }
+        return list;
     }
 } 

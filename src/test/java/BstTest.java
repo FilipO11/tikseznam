@@ -13,6 +13,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Disabled;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  *
  * @author Filip
@@ -257,6 +260,23 @@ public class BstTest {
         bst.add("Test6");
         bst.add("Test7");
         assertTrue(bst.exists("Test4"));
+    }
+
+    @Test
+    public void testAsListOnEmpty() {
+        assertEquals(new ArrayList<String>(), bst.asList());
+    }
+
+    @Test
+    public void testAsListOnFull() {
+        bst.add("07");
+        bst.add("04");
+        bst.add("03");
+        bst.add("15");
+        bst.add("12");
+        bst.add("08");
+        bst.add("13");
+        assertEquals(new ArrayList<>(Arrays.asList("03", "04", "07", "08", "12", "13", "15")), bst.asList());
     }
     
 }

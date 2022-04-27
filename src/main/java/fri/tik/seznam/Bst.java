@@ -4,6 +4,8 @@
  */
 package fri.tik.seznam;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Filip
@@ -160,6 +162,21 @@ public class Bst<Tip extends Comparable> implements Seznam<Tip> {
     @Override
     public boolean exists(Tip e) {
         return member(e);
+    }
+
+    @Override
+    public ArrayList<Tip> asList() {
+        return inorder(rootNode);
+    }
+
+    private ArrayList<Tip> inorder(ElementBST root) {
+        ArrayList<Tip> list = new ArrayList<>();
+        if(root != null) {
+            list.addAll(inorder(root.left));
+            list.add(root.value);
+            list.addAll(inorder(root.right));
+        }
+        return list;
     }
 }
 

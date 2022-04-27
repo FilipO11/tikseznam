@@ -12,6 +12,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Disabled;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  *
  * @author Filip
@@ -252,6 +255,19 @@ public class PrioritetnaVrstaTest {
         pv.add("Test1");
         assertTrue(pv.exists("Test1"));
         assertFalse(pv.exists("Test"));
+    }
+
+    @Test
+    public void testAsListOnEmpty() {
+        assertEquals(new ArrayList<String>(), pv.asList());
+    }
+
+    @Test
+    public void testAsListOnFull() {
+        pv.add("1");
+        pv.add("2");
+        pv.add("3");
+        assertEquals(new ArrayList<>(Arrays.asList("3", "1", "2")), pv.asList());
     }
     
 }

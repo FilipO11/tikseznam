@@ -5,6 +5,8 @@ package fri.tik.seznam;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Filip
@@ -82,6 +84,17 @@ public class Sklad<Tip> implements Seznam<Tip>{
     @Override
     public boolean exists(Tip e) {
         return search(e) != -1;
+    }
+
+    @Override
+    public ArrayList<Tip> asList() {
+        ArrayList<Tip> list = new ArrayList<>();
+        Element<Tip> elt = vrh;
+        while(elt != null) {
+            list.add(elt.vrednost);
+            elt = elt.vezava;
+        }
+        return list;
     }
 
     private void push(Tip e) {

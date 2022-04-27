@@ -12,6 +12,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Disabled;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  *
  * @author Filip
@@ -197,6 +200,20 @@ public class SkladTest {
         instance.add("test1");
         assertTrue(instance.exists("test1"));
         assertFalse(instance.exists("test"));
+    }
+
+    @Test
+    public void testAsListOnEmpty() {
+        Sklad<String> instance = new Sklad<>();
+        assertEquals(new ArrayList<String>(), instance.asList());
+    }
+
+    @Test
+    public void testAsListOnFull() {
+        Sklad<String> instance = new Sklad<>();
+        instance.add("1");
+        instance.add("2");
+        assertEquals(new ArrayList<>(Arrays.asList("2", "1")), instance.asList());
     }
 
 }

@@ -5,6 +5,8 @@
 
 package fri.tik.seznam;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Filip
@@ -26,4 +28,6 @@ public interface Seznam<Tip> {
     Tip remove(Tip e);
     
     boolean exists(Tip e);
+
+    ArrayList<Tip> asList();
 }
