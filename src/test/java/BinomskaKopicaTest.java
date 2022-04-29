@@ -86,12 +86,13 @@ class BinomskaKopicaTest {
         assertEquals("20", bk.getFirst());
     }
 
-    @Test
-    public void testGetFirstOnThree() {
+    @ParameterizedTest
+    @CsvSource({"15, 20", "30, 30"})
+    public void testGetFirstOnThree(ArgumentsAccessor arg) {
         bk.add("10");
         bk.add("20");
-        bk.add("15");
-        assertEquals("20", bk.getFirst());
+        bk.add(arg.get(0).toString());
+        assertEquals(arg.get(1).toString(), bk.getFirst());
     }
 
     /**
@@ -105,7 +106,7 @@ class BinomskaKopicaTest {
     @Test
     public void testSizeOnOne() {
         bk.add("10");
-        assertEquals(0, bk.size());
+        assertEquals(1, bk.size());
     }
 
     @Test
@@ -230,7 +231,7 @@ class BinomskaKopicaTest {
     public void testAsListOnTwo() {
         bk.add("10");
         bk.add("20");
-        assertEquals(new ArrayList<>(Arrays.asList("10", "20")), bk.asList());
+        assertEquals(new ArrayList<>(Arrays.asList("20", "10")), bk.asList());
     }
 
     @Test
@@ -238,7 +239,7 @@ class BinomskaKopicaTest {
         bk.add("10");
         bk.add("20");
         bk.add("30");
-        assertEquals(new ArrayList<>(Arrays.asList("30", "10", "20")), bk.asList());
+        assertEquals(new ArrayList<>(Arrays.asList("30", "20", "10")), bk.asList());
     }
 
     @Test
@@ -248,5 +249,21 @@ class BinomskaKopicaTest {
         bk.add("30");
         bk.add("40");
         assertEquals(new ArrayList<>(Arrays.asList("40", "20", "10", "30")), bk.asList());
+    }
+
+    /**
+     * Test of removeFirst method (not implemented)
+     */
+    @Test
+    public void testRemoveFirst() {
+        assertThrows(java.lang.UnsupportedOperationException.class, () -> bk.removeFirst());
+    }
+
+    /**
+     * Test of remove method (not implemented)
+     */
+    @Test
+    public void testRemove() {
+        assertThrows(java.lang.UnsupportedOperationException.class, () -> bk.remove("test"));
     }
 }
