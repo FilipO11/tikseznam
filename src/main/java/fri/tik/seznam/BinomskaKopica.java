@@ -68,7 +68,7 @@ public class BinomskaKopica<Tip extends Comparable> implements Seznam<Tip>{
 
     @Override
     public Tip removeFirst() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("Unsupported operation on BinomskaKopica");
     }
 
     @Override
@@ -103,7 +103,7 @@ public class BinomskaKopica<Tip extends Comparable> implements Seznam<Tip>{
 
     @Override
     public Tip remove(Tip e) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("Unsupported operation on BinomskaKopica");
     }
 
     @Override
