@@ -46,21 +46,23 @@ public class SeznamiUVTest {
     }
     
     @ParameterizedTest
-    @CsvSource(value = {"' pv'; OK", "' sk'; OK", "' bst'; OK", "''; Error: please specify a data structure type (pv, sk, bst)", "' aaa'; Error: please specify a correct data structure type (pv, sk, bst)"},
+    @CsvSource(value = {"' pv'; OK", "' sk'; OK", "' bst'; OK", "' bk'; OK",
+            "''; Error: please specify a data structure type (pv, sk, bst, bk)",
+            "' aaa'; Error: please specify a correct data structure type (pv, sk, bst, bk)"},
                 delimiterString = ";")
     public void testUse(ArgumentsAccessor arg) {
         assertEquals(arg.getString(1), uv.processInput(String.format("use%s", arg.getString(0))));
     }
     
     @ParameterizedTest
-    @ValueSource(strings = {"pv", "sk", "bst"})
+    @ValueSource(strings = {"pv", "sk", "bst", "bk"})
     public void testAddNothing(String structure) {
         assertEquals("OK", uv.processInput(String.format("use %s", structure)));
         assertEquals("Error: please specify a string", uv.processInput("add"));
     }
     
     @ParameterizedTest
-    @ValueSource(strings = {"pv", "sk", "bst"})
+    @ValueSource(strings = {"pv", "sk", "bst", "bk"})
     public void testAdd(String structure) {
         assertEquals("OK", uv.processInput(String.format("use %s", structure)));
         assertEquals("OK", uv.processInput("add Test1"));
@@ -68,7 +70,7 @@ public class SeznamiUVTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"pv", "sk", "bst"})
+    @ValueSource(strings = {"pv", "sk", "bst", "bk"})
     public void testAddMultipleWords(String structure) {
         assertEquals("OK", uv.processInput(String.format("use %s", structure)));
         assertEquals("OK", uv.processInput("add Test One"));
@@ -76,29 +78,29 @@ public class SeznamiUVTest {
     }
     
     @ParameterizedTest
-    @ValueSource(strings = {"pv", "sk", "bst"})
+    @ValueSource(strings = {"pv", "sk", "bst", "bk"})
     public void testRemoveFirstOnEmpty(String structure) {
         assertEquals("OK", uv.processInput(String.format("use %s", structure)));
         assertEquals("Error: structure is empty", uv.processInput("remove_first"));
     }
     
     @ParameterizedTest
-    @ValueSource(strings = {"pv", "sk", "bst"})
-    public void testRemoveFirst(String structure) {
-        assertEquals("OK", uv.processInput(String.format("use %s", structure)));
+    @CsvSource({"pv, Test", "sk, Test", "bst, Test", "bk, 'Unsupported operation on BinomskaKopica'"})
+    public void testRemoveFirst(ArgumentsAccessor arg) {
+        assertEquals("OK", uv.processInput(String.format("use %s", arg.get(0))));
         assertEquals("OK", uv.processInput("add Test"));
-        assertEquals("Test", uv.processInput("remove_first"));
+        assertEquals(arg.get(1), uv.processInput("remove_first"));
     }
     
     @ParameterizedTest
-    @ValueSource(strings = {"pv", "sk", "bst"})
+    @ValueSource(strings = {"pv", "sk", "bst", "bk"})
     public void testGetFirstOnEmpty(String structure) {
         assertEquals("OK", uv.processInput(String.format("use %s", structure)));
         assertEquals("Error: structure is empty", uv.processInput("get_first"));
     }
     
     @ParameterizedTest
-    @ValueSource(strings = {"pv", "sk", "bst"})
+    @ValueSource(strings = {"pv", "sk", "bst", "bk"})
     public void testGetFirst(String structure) {
         assertEquals("OK", uv.processInput(String.format("use %s", structure)));
         assertEquals("OK", uv.processInput("add Test"));
@@ -106,14 +108,14 @@ public class SeznamiUVTest {
     }
     
     @ParameterizedTest
-    @ValueSource(strings = {"pv", "sk", "bst"})
+    @ValueSource(strings = {"pv", "sk", "bst", "bk"})
     public void testSizeOnEmpty(String structure) {
         assertEquals("OK", uv.processInput(String.format("use %s", structure)));
         assertEquals("0", uv.processInput("size"));
     }
     
     @ParameterizedTest
-    @ValueSource(strings = {"pv", "sk", "bst"})
+    @ValueSource(strings = {"pv", "sk", "bst", "bk"})
     public void testSize(String structure) {
         assertEquals("OK", uv.processInput(String.format("use %s", structure)));
         assertEquals("OK", uv.processInput("add Test3"));
@@ -123,14 +125,14 @@ public class SeznamiUVTest {
     }
     
     @ParameterizedTest
-    @ValueSource(strings = {"pv", "sk", "bst"})
+    @ValueSource(strings = {"pv", "sk", "bst", "bk"})
     public void testDepthOnEmpty(String structure) {
         assertEquals("OK", uv.processInput(String.format("use %s", structure)));
         assertEquals("0", uv.processInput("depth"));
     }
     
     @ParameterizedTest
-    @CsvSource({"pv, 3", "sk, 1", "bst, 4"})
+    @CsvSource({"pv, 3", "sk, 1", "bst, 4", "bk, 3"})
     public void testDepth(ArgumentsAccessor arg) {
         assertEquals("OK", uv.processInput(String.format("use %s", arg.get(0))));
         assertEquals("OK", uv.processInput("add Test3"));
@@ -142,14 +144,14 @@ public class SeznamiUVTest {
     }
     
     @ParameterizedTest
-    @ValueSource(strings = {"pv", "sk", "bst"})
+    @ValueSource(strings = {"pv", "sk", "bst", "bk"})
     public void testIsEmptyOnEmpty(String structure) {
         assertEquals("OK", uv.processInput(String.format("use %s", structure)));
         assertEquals("Structure is empty", uv.processInput("is_empty"));
     }
     
     @ParameterizedTest
-    @ValueSource(strings = {"pv", "sk", "bst"})
+    @ValueSource(strings = {"pv", "sk", "bst", "bk"})
     public void testIsEmpty(String structure) {
         assertEquals("OK", uv.processInput(String.format("use %s", structure)));
         assertEquals("OK", uv.processInput("add Test"));
@@ -158,21 +160,21 @@ public class SeznamiUVTest {
     
     
     @ParameterizedTest
-    @ValueSource(strings = {"pv", "sk", "bst"})
+    @ValueSource(strings = {"pv", "sk", "bst", "bk"})
     public void testRemoveNothing(String structure) {
         assertEquals("OK", uv.processInput(String.format("use %s", structure)));
         assertEquals("Error: please specify a string", uv.processInput("remove"));
     }
     
     @ParameterizedTest
-    @ValueSource(strings = {"pv", "sk", "bst"})
+    @ValueSource(strings = {"pv", "sk", "bst", "bk"})
     public void testRemoveOnEmpty(String structure) {
         assertEquals("OK", uv.processInput(String.format("use %s", structure)));
         assertEquals("Error: structure is empty", uv.processInput("remove Test"));
     }
     
     @ParameterizedTest
-    @ValueSource(strings = {"pv", "sk", "bst"})
+    @ValueSource(strings = {"pv", "sk", "bst", "bk"})
     public void testRemoveEltNotFound(String structure) {
         assertEquals("OK", uv.processInput(String.format("use %s", structure)));
         assertEquals("OK", uv.processInput("add Test"));
@@ -180,41 +182,42 @@ public class SeznamiUVTest {
     }
     
     @ParameterizedTest
-    @ValueSource(strings = {"pv", "sk", "bst"})
-    public void testRemove(String structure) {
-        assertEquals("OK", uv.processInput(String.format("use %s", structure)));
+    @CsvSource({"pv, Test3, Test2, Test5", "sk, Test3, Test2, Test5", "bst, Test3, Test2, Test5",
+            "bk, 'Unsupported operation on BinomskaKopica', 'Unsupported operation on BinomskaKopica', 'Unsupported operation on BinomskaKopica'"})
+    public void testRemove(ArgumentsAccessor arg) {
+        assertEquals("OK", uv.processInput(String.format("use %s", arg.get(0))));
         assertEquals("OK", uv.processInput("add Test3"));
         assertEquals("OK", uv.processInput("add Test2"));
         assertEquals("OK", uv.processInput("add Test5"));
-        assertEquals("Test3", uv.processInput("remove Test3"));
-        assertEquals("Test2", uv.processInput("remove Test2"));
-        assertEquals("Test5", uv.processInput("remove Test5"));
+        assertEquals(arg.get(1), uv.processInput("remove Test3"));
+        assertEquals(arg.get(2), uv.processInput("remove Test2"));
+        assertEquals(arg.get(3), uv.processInput("remove Test5"));
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"pv", "sk", "bst"})
-    public void testRemoveMultipleWords(String structure) {
-        assertEquals("OK", uv.processInput(String.format("use %s", structure)));
+    @CsvSource({"pv, 'Test One'", "sk, 'Test One'", "bst, 'Test One'", "bk, 'Unsupported operation on BinomskaKopica'"})
+    public void testRemoveMultipleWords(ArgumentsAccessor arg) {
+        assertEquals("OK", uv.processInput(String.format("use %s", arg.get(0))));
         assertEquals("OK", uv.processInput("add Test One"));
-        assertEquals("Test One", uv.processInput("remove Test One"));
+        assertEquals(arg.get(1), uv.processInput("remove Test One"));
     }
     
     @ParameterizedTest
-    @ValueSource(strings = {"pv", "sk", "bst"})
+    @ValueSource(strings = {"pv", "sk", "bst", "bk"})
     public void testExistsOnEmpty(String structure) {
         assertEquals("OK", uv.processInput(String.format("use %s", structure)));
         assertEquals("Element is not in the structure", uv.processInput("exists Test"));
     }
     
     @ParameterizedTest
-    @ValueSource(strings = {"pv", "sk", "bst"})
+    @ValueSource(strings = {"pv", "sk", "bst", "bk"})
     public void testExistsNothing(String structure) {
         assertEquals("OK", uv.processInput(String.format("use %s", structure)));
         assertEquals("Error: please specify a string", uv.processInput("exists"));
     }
     
     @ParameterizedTest
-    @ValueSource(strings = {"pv", "sk", "bst"})
+    @ValueSource(strings = {"pv", "sk", "bst", "bk"})
     public void testExists(String structure) {
         assertEquals("OK", uv.processInput(String.format("use %s", structure)));
         assertEquals("OK", uv.processInput("add Test"));
@@ -223,10 +226,44 @@ public class SeznamiUVTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"pv", "sk", "bst"})
+    @ValueSource(strings = {"pv", "sk", "bst", "bk"})
     public void testExistsMultipleWords(String structure) {
         assertEquals("OK", uv.processInput(String.format("use %s", structure)));
         assertEquals("OK", uv.processInput("add Test One"));
         assertEquals("Element is in the structure", uv.processInput("exists Test One"));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"pv", "sk", "bst", "bk"})
+    public void testAsListOnEmpty(String structure) {
+        assertEquals("OK", uv.processInput(String.format("use %s", structure)));
+        assertEquals("[]", uv.processInput("as_list"));
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"pv; [4, 3, 1, 2]", "sk; [4, 1, 2, 3]", "bst; [1, 2, 3, 4]", "bk; [4, 3, 2, 1]"},
+                delimiterString = ";")
+    public void testAsList(ArgumentsAccessor arg) {
+        assertEquals("OK", uv.processInput(String.format("use %s", arg.get(0))));
+        assertEquals("OK", uv.processInput("add 3"));
+        assertEquals("OK", uv.processInput("add 2"));
+        assertEquals("OK", uv.processInput("add 1"));
+        assertEquals("OK", uv.processInput("add 4"));
+        assertEquals(arg.get(1), uv.processInput("as_list"));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"pv", "sk", "bst", "bk"})
+    public void testResetOnEmpty(String structure) {
+        assertEquals("OK", uv.processInput(String.format("use %s", structure)));
+        assertEquals("OK", uv.processInput("reset"));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"pv, OK", "sk, OK", "bst, OK", "bk, 'Unsupported operation on BinomskaKopica'"})
+    public void testReset(ArgumentsAccessor arg) {
+        assertEquals("OK", uv.processInput(String.format("use %s", arg.get(0))));
+        assertEquals("OK", uv.processInput("add 1"));
+        assertEquals(arg.get(1), uv.processInput("reset"));
     }
 }
