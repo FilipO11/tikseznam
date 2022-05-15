@@ -30,4 +30,6 @@ public interface Seznam<Tip> {
     boolean exists(Tip e);
 
     ArrayList<Tip> asList();
+
+    void print();
 }

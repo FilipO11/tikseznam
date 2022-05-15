@@ -127,6 +127,11 @@ public class BinomskaKopica<Tip extends Comparable> implements Seznam<Tip>{
         return asListRec(top);
     }
 
+    @Override
+    public void print() {
+        throw new UnsupportedOperationException("Unsupported operation on BinomskaKopica");
+    }
+
     private ArrayList<Tip> asListRec(BKNode node) {
         BKNode i = node;
         ArrayList<Tip> list = new ArrayList<>();

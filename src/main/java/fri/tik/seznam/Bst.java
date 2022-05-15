@@ -169,6 +169,20 @@ public class Bst<Tip extends Comparable> implements Seznam<Tip> {
         return inorder(rootNode);
     }
 
+    @Override
+    public void print() {
+        print(rootNode, 0);
+    }
+    private void print(ElementBST node, int numTabs) {
+        if (node == null)
+            return;
+        print(node.right, numTabs+1);
+        for (int i = 0; i < numTabs; i++)
+            System.out.print('\t');
+        System.out.println(node.value);
+        print(node.left, numTabs + 1);
+    }
+
     private ArrayList<Tip> inorder(ElementBST root) {
         ArrayList<Tip> list = new ArrayList<>();
         if(root != null) {

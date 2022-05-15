@@ -97,6 +97,11 @@ public class Sklad<Tip> implements Seznam<Tip>{
         return list;
     }
 
+    @Override
+    public void print() {
+
+    }
+
     private void push(Tip e) {
         Element<Tip> novVrh = new Element<>(e);
         novVrh.vezava = vrh;

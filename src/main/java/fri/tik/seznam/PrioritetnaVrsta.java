@@ -156,4 +156,9 @@ public class PrioritetnaVrsta<Tip extends Comparable> implements Seznam<Tip> {
         }
         return list;
     }
+
+    @Override
+    public void print() {
+
+    }
 } 

@@ -114,6 +114,9 @@ public class SeznamiUV {
                     while(!seznam.isEmpty()) seznam.removeFirst();
                     break;
 
+                case "print":
+                    seznam.print();
+
                 default:
                     result = String.format("Unrecognized command: %s", token);
             }
