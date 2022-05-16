@@ -162,7 +162,17 @@ public class PrioritetnaVrsta<Tip extends Comparable> implements Seznam<Tip> {
 
     @Override
     public void print() {
-
+        StringBuilder sb = new StringBuilder();
+        for (Object elt:
+             heap) {
+            if (elt == null) {
+                break;
+            }
+            sb.append(elt);
+            sb.append(" ");
+        }
+        String print = sb.toString();
+        System.out.println(print.trim());
     }
 
     @Override

@@ -102,7 +102,15 @@ public class Sklad<Tip> implements Seznam<Tip>{
 
     @Override
     public void print() {
-
+        StringBuilder sb = new StringBuilder();
+        Element<Tip> elt = vrh;
+        while(elt != null) {
+            sb.append(elt.vrednost);
+            sb.append(" ");
+            elt = elt.vezava;
+        }
+        String print = sb.toString();
+        System.out.println(print.trim());
     }
 
     @Override
