@@ -5,9 +5,7 @@ package fri.tik.seznam;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -163,25 +161,30 @@ public class PrioritetnaVrsta<Tip extends Comparable> implements Seznam<Tip> {
     @Override
     public void print() {
         StringBuilder sb = new StringBuilder();
-        for (Object elt:
-             heap) {
-            if (elt == null) {
-                break;
-            }
-            sb.append(elt);
+        for (int i = 0; i < end; i++) {
+            sb.append(heap[i]);
             sb.append(" ");
         }
         String print = sb.toString();
-        System.out.println(print.trim());
+        if (!print.isEmpty()) System.out.println(print.trim());
     }
 
     @Override
     public void save(OutputStream outputStream) throws IOException {
-        throw new UnsupportedOperationException();
+        ObjectOutputStream out = new ObjectOutputStream(outputStream);
+        out.writeInt(end);
+        for (int i = 0; i < end; i++) {
+            out.writeObject(heap[i]);
+        }
     }
 
     @Override
     public void restore(InputStream inputStream) throws IOException, ClassNotFoundException {
-        throw new UnsupportedOperationException();
+        ObjectInputStream in = new ObjectInputStream(inputStream);
+        end = in.readInt();
+        heap = new Object[end];
+        for (int i = 0; i < end; i++) {
+            heap[i] = in.readObject();
+        }
     }
 } 
