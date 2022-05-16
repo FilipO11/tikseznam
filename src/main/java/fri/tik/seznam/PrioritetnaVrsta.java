@@ -5,6 +5,9 @@ package fri.tik.seznam;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 /**
@@ -160,5 +163,15 @@ public class PrioritetnaVrsta<Tip extends Comparable> implements Seznam<Tip> {
     @Override
     public void print() {
 
+    }
+
+    @Override
+    public void save(OutputStream outputStream) throws IOException {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void restore(InputStream inputStream) throws IOException, ClassNotFoundException {
+        throw new UnsupportedOperationException();
     }
 } 

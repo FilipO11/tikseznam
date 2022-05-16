@@ -1,5 +1,8 @@
 package fri.tik.seznam;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
@@ -130,6 +133,16 @@ public class BinomskaKopica<Tip extends Comparable> implements Seznam<Tip>{
     @Override
     public void print() {
         throw new UnsupportedOperationException("Unsupported operation on BinomskaKopica");
+    }
+
+    @Override
+    public void save(OutputStream outputStream) throws IOException {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void restore(InputStream inputStream) throws IOException, ClassNotFoundException {
+        throw new UnsupportedOperationException();
     }
 
     private ArrayList<Tip> asListRec(BKNode node) {
