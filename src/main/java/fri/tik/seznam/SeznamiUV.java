@@ -5,6 +5,9 @@ package fri.tik.seznam;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -118,6 +121,22 @@ public class SeznamiUV {
                     seznam.print();
                     break;
 
+                case "save":
+                    if (sc.hasNext()) {
+                        seznam.save(new FileOutputStream(sc.next()));
+                    } else {
+                        result = "Error: please specify a file name";
+                    }
+                    break;
+
+                case "restore":
+                    if (sc.hasNext()) {
+                        seznam.restore(new FileInputStream(sc.next()));
+                    } else {
+                        result = "Error: please specify a file name";
+                    }
+                    break;
+
                 case "exit":
                     result = "Have a nice day.";
                     break;
@@ -127,6 +146,10 @@ public class SeznamiUV {
             }
         } catch (UnsupportedOperationException e) {
             result = e.getMessage();
+        } catch (IOException e) {
+            result = "Error: IO error " + e.getMessage();
+        } catch (ClassNotFoundException e) {
+            result = "Error: Unknown format";
         }
         return result;
     }
