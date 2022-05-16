@@ -116,6 +116,11 @@ public class SeznamiUV {
 
                 case "print":
                     seznam.print();
+                    break;
+
+                case "exit":
+                    result = "Have a nice day.";
+                    break;
 
                 default:
                     result = String.format("Unrecognized command: %s", token);
