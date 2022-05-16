@@ -5,9 +5,7 @@ package fri.tik.seznam;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -110,17 +108,34 @@ public class Sklad<Tip> implements Seznam<Tip>{
             elt = elt.vezava;
         }
         String print = sb.toString();
-        System.out.println(print.trim());
+        if (!print.isEmpty()) System.out.println(print.trim());
     }
 
     @Override
     public void save(OutputStream outputStream) throws IOException {
-        throw new UnsupportedOperationException();
+        ObjectOutputStream out = new ObjectOutputStream(outputStream);
+        Object[] save = new Object[size()];
+        Element<Tip> elt = vrh;
+        int i = 0;
+        while(elt != null) {
+            save[i] = elt.vrednost;
+            elt = elt.vezava;
+            i++;
+        }
+        for (i--; i >= 0; i--) {
+            out.writeObject(save[i]);
+        }
+        out.writeObject("x");
     }
 
     @Override
     public void restore(InputStream inputStream) throws IOException, ClassNotFoundException {
-        throw new UnsupportedOperationException();
+        ObjectInputStream in = new ObjectInputStream(inputStream);
+        Tip elt = (Tip) in.readObject();
+        while (!elt.equals("x")) {
+            push(elt);
+            elt = (Tip) in.readObject();
+        }
     }
 
     private void push(Tip e) {
